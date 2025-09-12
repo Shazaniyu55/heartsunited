@@ -89,9 +89,9 @@ app.get('/donate',  (req, res) => {
   
 });
 
-app.get('/galary',  (req, res) => {
+app.get('/gallery',  (req, res) => {
 
-    res.render("galary"); 
+    res.render("gallery"); 
   
 });
 
