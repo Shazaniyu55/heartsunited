@@ -77,8 +77,6 @@ app.get('/blog',  (req, res) => {
 });
 
 
-
-
 app.get('/donate',  (req, res) => {
 
     res.render("donate"); 
@@ -91,11 +89,6 @@ app.get('/gallery',  (req, res) => {
   
 });
 
-app.get('/event',  (req, res) => {
-
-    res.render("event"); 
-  
-});
 
 app.get('/contact',  (req, res) => {
 
