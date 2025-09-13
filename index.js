@@ -126,8 +126,8 @@ app.post('/send-email', (req, res) => {
   </head>
   <body style="margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#f4f6f8;">
     <!-- Banner -->
-    <div style="background: linear-gradient(135deg, #0a3d62, #3c6382); padding: 20px; text-align:center; color: #050505ff;">
-      <h1 style="margin:0; font-size: 24px;">Royale Cleaners</h1>
+    <div style="background: linear-gradient(135deg, #d46c26ff, #fcaa11ff); padding: 20px; text-align:center; color: #ffffffff;">
+      <h1 style="margin:0; font-size: 24px;">Hearts United</h1>
       <p style="margin:0; font-size: 14px;">New Contact Form Submission</p>
     </div>
 
@@ -145,7 +145,7 @@ app.post('/send-email', (req, res) => {
         <strong style="color:#3c6382;">Email:</strong> ${email}
       </p>
 
-      <div style="margin-top:20px; padding:15px; background:#f9f9f9; border-left:4px solid #0a3d62;">
+      <div style="margin-top:20px; padding:15px; background:#f9f9f9; border-left:4px solid #cc570aff;">
         <p style="margin:0; font-size:16px; color:#333;">
           <strong style="color:#0a3d62;">Message:</strong><br/>
           ${message}
