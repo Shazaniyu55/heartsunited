@@ -77,11 +77,7 @@ app.get('/blog',  (req, res) => {
 });
 
 
-app.get('/causes',  (req, res) => {
 
-    res.render("causes"); 
-  
-});
 
 app.get('/donate',  (req, res) => {
 
