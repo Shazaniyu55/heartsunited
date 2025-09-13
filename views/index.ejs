@@ -442,15 +442,15 @@
     		</div>
     		<div class="col-md-6 volunteer pl-md-5 ftco-animate">
     			<h3 class="mb-3">Be a volunteer</h3>
-    			<form action="#" class="volunter-form">
+    			<form action="/send-email" method="post" class="volunter-form">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Name">
+              <input type="text" name="fullname" class="form-control" placeholder="Full Name">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Email">
+              <input type="email" name="email" class="form-control" placeholder="Your Email">
             </div>
             <div class="form-group">
-              <textarea name="" id="" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
+              <textarea name="message" id="" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
             </div>
             <div class="form-group">
               <input type="submit" value="Send Message" class="btn btn-white py-3 px-5">
@@ -521,6 +521,28 @@
 <!-- Elfsight WhatsApp Chat | Untitled WhatsApp Chat -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <div class="elfsight-app-8ea3cd70-6300-45c0-9ca8-575b3d247d67" data-elfsight-app-lazy></div>
+
+
+<script>
+  document
+    .getElementById("volunteerForm")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault(); // prevent normal form submission
+
+      const formData = new FormData(this);
+      const response = await fetch("/send-email", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        document.getElementById("successPopup").style.display = "flex";
+        this.reset(); // clear form
+      } else {
+        alert("Something went wrong, please try again.");
+      }
+    });
+</script>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
