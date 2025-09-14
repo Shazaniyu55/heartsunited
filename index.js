@@ -72,9 +72,16 @@ app.get('/about',  (req, res) => {
   
 });
 
-app.get('/blog',  (req, res) => {
+app.get('/blog',  async(req, res) => {
 
-    res.render("blog"); 
+    //res.render("blog"); 
+    try {
+    const blogs = await Blog.find().sort({ timePosted: -1 }).limit(3); 
+    res.render("blog", { blogs }); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
   
 });
 
