@@ -171,6 +171,72 @@ app.post('/send-email', (req, res) => {
 });
 
 
+
+app.post('/send-donation', (req, res) => {
+    const { fullname, email, amount, message } = req.body;
+    console.log(fullname, email, amount, message);
+   sendEmail(
+    "heartsuinted@gmail.com",
+  `New Contact Form Submission from ${fullname}`,
+  `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Contact Form Submission</title>
+  </head>
+  <body style="margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#f4f6f8;">
+    <!-- Banner -->
+    <div style="background: linear-gradient(135deg, #d46c26ff, #fcaa11ff); padding: 20px; text-align:center; color: #ffffffff;">
+      <h1 style="margin:0; font-size: 24px;">Hearts United</h1>
+      <p style="margin:0; font-size: 14px;">New Contact Form Submission</p>
+    </div>
+
+    <!-- Content Container -->
+    <div style="max-width:600px; margin:30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+      
+      <h2 style="color:#0a3d62; border-bottom:2px solid #f1f1f1; padding-bottom:10px;">Submission Details</h2>
+      
+      <p style="margin:10px 0; font-size:16px;">
+        <strong style="color:#3c6382;">Full Name:</strong> ${fullname}
+      </p>
+     
+     
+      <p style="margin:10px 0; font-size:16px;">
+        <strong style="color:#3c6382;">Email:</strong> ${email}
+      </p>
+
+       <p style="margin:10px 0; font-size:16px;">
+        <strong style="color:#3c6382;">Donation Amount:</strong> $${amount}
+      </p>
+
+      <div style="margin-top:20px; padding:15px; background:#f9f9f9; border-left:4px solid #cc570aff;">
+        <p style="margin:0; font-size:16px; color:#333;">
+          <strong style="color:#0a3d62;">Message:</strong><br/>
+          ${message}
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align:center; padding:15px; font-size:13px; color:#999;">
+      &copy; ${new Date().getFullYear()} Royale Cleaners. All Rights Reserved.
+    </div>
+  </body>
+  </html>
+  `
+).then(() => {
+        console.log("Contact form email sent successfully!");
+        res.redirect('/')
+        //res.json({ success: true, message: "Contact form email sent successfully" });
+    }).catch((error) => {
+        console.error("Error sending email:", error);
+    });
+    
+});
+
+
 app.listen(port, () => {
     console.log(`server running at port: http://localhost:${port}`);
 });
