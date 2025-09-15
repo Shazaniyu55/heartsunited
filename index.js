@@ -6,7 +6,7 @@ const connectDB = require('./config/db');
 const Blog = require('./model/blog');
 const mongoose = require("mongoose");
 const {sendEmail} = require('./util/emailserivce');
-
+const Comment = require('./model/comment');
 
 connectDB();
 // serving the static files
@@ -53,6 +53,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 //seedBlogs();
 
+const getCommentsByPost = async (postId) => {
+  return await Comment.find({ postId }).sort({ createdAt: -1 }).lean();
+};
 
 app.get('/', async (req, res) => {
 
@@ -62,6 +65,39 @@ app.get('/', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");
+  }
+});
+
+
+app.post('/comments', async(req, res)=>{
+
+  try {
+    const { name, email, message, postId } = req.body;
+    // Validate required fields
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Name, Email, and Message are required" });
+    }
+
+
+      // Create and save the comment
+    const newComment = new Comment({
+      name,
+      email,
+      message,
+      postId,
+    });
+
+    await newComment.save();
+    res.redirect(`/blog/${postId}`);
+    //  res.status(201).json({
+    //   success: true,
+    //   message: "Comment posted successfully",
+    //   data: newComment,
+    // });
+  } catch (error) {
+    console.error("Error posting comment:", error);
+    res.status(500).json({ error: "Server error" });
+    
   }
 });
 
@@ -109,7 +145,8 @@ app.get("/blog/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
     const recentBlogs = await Blog.find().sort({ createdAt: -1 }).limit(3);
-    res.render('blog-single', { blog , recentBlogs});
+    const comments = await getCommentsByPost(req.params.id);
+    res.render('blog-single', { blog , recentBlogs, comments});
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");
